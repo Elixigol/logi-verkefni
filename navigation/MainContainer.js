@@ -3,15 +3,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+
 // Screens
 import HomeScreen from './screens/HomeScreen';
-import DetailsScreen from './screens/DetailsScreen';
-import SettingsScreen from './screens/SettingsScreen';
+import GasScreen from './screens/GasScreen';
+import ArrivalsScreen from './screens/ArrivalsScreen';
 
-//Screen names
+//Screen name
+const gasName = "Gas Stations";
 const homeName = "Home";
-const detailsName = "Details";
-const settingsName = "Settings";
+const settingsName = "Arrivals";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ function MainContainer() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={homeName}
+        initialRouteName={gasName}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
@@ -27,12 +28,14 @@ function MainContainer() {
 
             if (rn === homeName) {
               iconName = focused ? 'home' : 'home-outline';
+            } 
 
-            } else if (rn === detailsName) {
-              iconName = focused ? 'list' : 'list-outline';
+            else if (rn === gasName) {
+              iconName = focused ? 'car' : 'car-outline';
+            }
 
-            } else if (rn === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
+            else if (rn === settingsName) {
+              iconName = focused ? 'airplane' : 'airplane-outline';
             }
 
             // You can return any component that you like here!
@@ -46,9 +49,9 @@ function MainContainer() {
           style: { padding: 10, height: 70}
         }}>
 
+        <Tab.Screen name={gasName} component={GasScreen} />
+        <Tab.Screen name={settingsName} component={ArrivalsScreen} />
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={settingsName} component={SettingsScreen} />
 
       </Tab.Navigator>
     </NavigationContainer>

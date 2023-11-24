@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, Button, ActivityIndicator, ScrollView, Touchabl
 import { StatusBar } from 'expo-status-bar';
 
 
-export default function App() {
+export default function GasScreen({ navigation }) {
   let [isLoading, setIsLoading] = useState(true);
-  let [error, setError] = useState();
   let [response, setResponse] = useState();
+  let [sorting, setSorting] = useState(0);
   
 
   const onPress = (lat, lng) => {
@@ -25,16 +25,13 @@ export default function App() {
         })
   }, []);
 
+  
+
   const getContent = () => {
     if (isLoading) {
       return <ActivityIndicator size="large" />;
     }
 
-    if (error) {
-      return <Text>{error}</Text>
-    }
-
-    
 
 
     let data = response;
@@ -64,18 +61,22 @@ export default function App() {
       data[i]["distance"] = dist(geoLat, geoLong, data[i]["geo"]["lat"], data[i]["geo"]["lon"])
     }
 
-    
-    data.sort((a,b) => a.distance > b.distance)
-
-    
-
+    if (sorting == 0){
+      data.sort((a,b) => a.distance > b.distance)
+    }
+    else {
+      data.sort((a,b) => a.bensin95 > b.bensin95)
+    }
     
 
     
     return (
         <ScrollView>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => setSorting(0)}>
             <Text>Sort by distance</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => setSorting(1)}>
+            <Text>Sort by price</Text>
           </TouchableOpacity>
           
             {data.map((station) => {
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: "5px"
   },
   station: {
     display: "flex",
@@ -133,7 +135,10 @@ const styles = StyleSheet.create({
     marginBottom: '5px',
     padding: '20px',
     borderRadius: "20px",
-    width: '300px'
+    width: '300px',
+    marginLeft: "50px",
+    marginRight: "50px",
+    
   },
   button: {
     textDecorationLine: "none",
@@ -141,7 +146,9 @@ const styles = StyleSheet.create({
     borderRadius: "5px",
     backgroundColor: "#789EFF",
     color: "#ffffff",
-    fontWeight: "900"
+    fontWeight: "900",
+    margin: "5px",
+    marginTop: "5px"
   }
 
 });
