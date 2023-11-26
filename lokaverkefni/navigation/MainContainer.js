@@ -5,13 +5,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 // Screens
-import HomeScreen from './screens/HomeScreen';
+import DepartureScreen from './screens/DepartureScreen';
 import GasScreen from './screens/GasScreen';
 import ArrivalsScreen from './screens/ArrivalsScreen';
 
 //Screen name
 const gasName = "Gas Stations";
-const homeName = "Home";
+const departureName = "Departures";
 const settingsName = "Arrivals";
 
 const Tab = createBottomTabNavigator();
@@ -26,8 +26,8 @@ function MainContainer() {
             let iconName;
             let rn = route.name;
 
-            if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
+            if (rn === departureName) {
+              iconName = focused ? 'airplane' : 'airplane-outline';
             } 
 
             else if (rn === gasName) {
@@ -51,7 +51,7 @@ function MainContainer() {
 
         <Tab.Screen name={gasName} component={GasScreen} />
         <Tab.Screen name={settingsName} component={ArrivalsScreen} />
-        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={departureName} component={DepartureScreen} />
 
       </Tab.Navigator>
     </NavigationContainer>
