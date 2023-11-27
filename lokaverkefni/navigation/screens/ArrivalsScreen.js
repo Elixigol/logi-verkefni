@@ -5,13 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 export default function ArrivalsScreen({ navigation }) {
   let [isLoading, setIsLoading] = useState(true);
   let [response, setResponse] = useState();
-  let [sorting, setSorting] = useState(0);
-  
-
-  const onPress = (lat, lng) => {
-    var url = "http://maps.apple.com/?daddr=" + `${lat},${lng}`;
-    Linking.openURL(url);
-  };
+  let [filter, setFilter] = useState(0);
   
   useEffect(() => {
     fetch("http://localhost:3000/api/arrivals")
@@ -40,10 +34,10 @@ export default function ArrivalsScreen({ navigation }) {
     
     return (
         <ScrollView>
-          <TouchableOpacity style={styles.button} onPress={() => setSorting(0)}>
+          <TouchableOpacity style={styles.button} onPress={() => setFilter(0)}>
             <Text>IcelandAir</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => setSorting(1)}>
+          <TouchableOpacity style={styles.button} onPress={() => setFilter(1)}>
             <Text>Airport Associates</Text>
           </TouchableOpacity>
           
@@ -51,14 +45,7 @@ export default function ArrivalsScreen({ navigation }) {
               console.log
                 return (
                     <View style={styles.station}>
-                        <Text>{flight.Airline}, {flight.DisplayName}</Text>
-
-                        <View style={styles.info}>
-                          <Text>{flight.No}</Text>
-                            <TouchableOpacity style={styles.button}>
-                              <Text>Meow</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Text>{flight.No}, {flight.DisplayName}, {flight.Airline}, {flight.Scheduled.substring(11,16)}, {flight.Estimated.substring(11,16)}</Text>
                     </View>
                 );
             })}
@@ -103,9 +90,8 @@ const styles = StyleSheet.create({
     marginBottom: '5px',
     padding: '20px',
     borderRadius: "20px",
-    width: '300px',
-    marginLeft: "50px",
-    marginRight: "50px",
+    width: '380px',
+   
     
   },
   button: {
@@ -116,7 +102,9 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "900",
     margin: "5px",
-    marginTop: "5px"
+    marginTop: "5px",
+    width: "390px",
+    alignSelf: "center"
   }
 
 });
