@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Button, ActivityIndicator, ScrollView, TouchableOpacity, Alert, Linking, Platform } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { Directions } from 'react-native-gesture-handler';
 
 
 export default function GasScreen({ navigation }) {
@@ -72,21 +73,22 @@ export default function GasScreen({ navigation }) {
     
     return (
         <ScrollView>
-          <TouchableOpacity style={styles.button} onPress={() => setSorting(0)}>
-            <Text>Sort by distance</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => setSorting(1)}>
-            <Text>Sort by price</Text>
-          </TouchableOpacity>
-          
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => setSorting(0)}>
+              <Text>Sort by distance</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => setSorting(1)}>
+              <Text>Sort by price</Text>
+            </TouchableOpacity>
+          </View>
             {data.map((station) => {
               console.log
                 return (
                     <View key={station.key} style={styles.station}>
-                        <Text>{station.company}, {station.name}</Text>
+                        
 
                         <View style={styles.info}>
-                          <Text>{station.bensin95}</Text>
+                          <Text>{station.company}, {station.name}, {station.bensin95} kr</Text>
                             <TouchableOpacity style={styles.button} onPress={() => onPress(station.geo.lat, station.geo.lon)}>
                               <Text>MAPS</Text>
                             </TouchableOpacity>
@@ -125,7 +127,8 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: "5px"
+    marginTop: "5px",
+    alignItems: "center"
   },
   station: {
     display: "flex",
@@ -136,11 +139,12 @@ const styles = StyleSheet.create({
     padding: '20px',
     borderRadius: "20px",
     width: '300px',
-    marginLeft: "50px",
+    marginLeft: "60px",
     marginRight: "50px",
     
   },
   button: {
+    display: "flex",
     textDecorationLine: "none",
     padding: "20px",
     borderRadius: "5px",
@@ -148,7 +152,16 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontWeight: "900",
     margin: "5px",
-    marginTop: "5px"
+    marginTop: "5px",
+    width: "200px",
+    alignItems: "center",
+    alignSelf: "center"
+    
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    
   }
-
 });
